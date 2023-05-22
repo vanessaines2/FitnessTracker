@@ -21,7 +21,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Sereve App
+// Server App
 app.listen(PORT, () => {
   console.log(`App listening on PORT ${PORT}`);
 });
