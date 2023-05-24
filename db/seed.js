@@ -7,8 +7,22 @@ const {
 } = require("./seedData");
 
 async function dropTables() {
-  // Drop all tables in order
+  try {
+    console.log("Starting to drop tables...");
+    await client.query('
+    DROP TABLE IF EXISTS routine_activities;
+    DROP TABLE IF EXISTS routines;
+    DROP TABLES IF EXISTS activities;
+    DROP TABLES IF EXISTS users;
+    ');
+
+    console.log("Finished dropping tables!");
+  } catch (error) {
+    console.error("Error dropping tables!");
+    throw error;
+  }
 }
+ 
 
 async function createTables() {
   // Define your tables and fields
