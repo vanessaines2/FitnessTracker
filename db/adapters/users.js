@@ -1,5 +1,6 @@
 const client = require("../client");
 
+
 async function createUser({username, password}){
     const { 
         rows: [user],
@@ -21,5 +22,12 @@ async function getAllUsers(){
     ');
     return rows;
 }
+
+
+async function getUser() {}
+
+async function getUserById() {}
+
+async function getUserByUsername() {}
 
 module.exports = {createUser, getAllUsers };

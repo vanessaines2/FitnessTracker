@@ -24,6 +24,8 @@ server.use((err, req, res, next) => {
 });
 
 // Server App
+
 server.listen(PORT, () => {
   console.log(`Listening on PORT ${PORT}`);
+
 });
