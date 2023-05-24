@@ -13,7 +13,7 @@ async function createUser({ username, password }) {
   return user;
 }
 // may need to revise this function
-async function getUser({ username, password }) {
+async function getUsers({ username, password }) {
   const { rows } = await client.query(`
     SELECT * FROM users;
     `);
@@ -48,4 +48,4 @@ async function getUserByUsername(username) {
   }
 }
 
-module.exports = { createUser, getUser, getUserById, getUserByUsername };
+module.exports = { createUser, getUsers, getUserById, getUserByUsername };
