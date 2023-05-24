@@ -4,7 +4,12 @@ const users = [
   { username: "Jessica", password: 1234567 },
   { username: "Vanessa", password: 123567 },
 ];
-const activities = [];
+const activities = [
+  { name: "squats", description: "Legs" },
+  { name: "push ups", description: "Chest" },
+  { name: "bicep curl", description: "Arms" },
+  { name: "walking", description: "Cardio" },
+];
 const routines = [];
 const routine_activities = [];
 
