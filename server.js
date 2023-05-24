@@ -3,6 +3,8 @@ const express = require("express");
 const morgan = require("morgan");
 const PORT = 3001;
 const server = express();
+const client = require("./db/client");
+client.connect;
 
 // Middleware
 server.use(morgan("dev"));
