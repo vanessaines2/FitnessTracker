@@ -9,12 +9,12 @@ const {
 async function dropTables() {
   try {
     console.log("Starting to drop tables...");
-    await client.query('
+    await client.query(`
     DROP TABLE IF EXISTS routine_activities;
     DROP TABLE IF EXISTS routines;
-    DROP TABLES IF EXISTS activities;
-    DROP TABLES IF EXISTS users;
-    ');
+    DROP TABLE IF EXISTS activities;
+    DROP TABLE IF EXISTS users;
+    `);
 
     console.log("Finished dropping tables!");
   } catch (error) {
@@ -22,7 +22,6 @@ async function dropTables() {
     throw error;
   }
 }
- 
 
 async function createTables() {
   // Define your tables and fields
