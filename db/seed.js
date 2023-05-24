@@ -12,8 +12,8 @@ async function dropTables() {
     await client.query(`
     DROP TABLE IF EXISTS routine_activities;
     DROP TABLE IF EXISTS routines;
-    DROP TABLES IF EXISTS activities;
-    DROP TABLES IF EXISTS users;
+    DROP TABLE IF EXISTS activities;
+    DROP TABLE IF EXISTS users;
     `);
 
     console.log("Finished dropping tables!");
