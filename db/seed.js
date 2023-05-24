@@ -24,7 +24,38 @@ async function dropTables() {
 }
 
 async function createTables() {
-  // Define your tables and fields
+  try {
+    console.log("...starting to build tables...");
+    await client.query(`
+    CREATE TABLE users (
+      id SERIAL PRIMARY KEY,
+      username varchar(255) UNIQUE NOT NULL,
+      password varchar (255) NOT NULL    
+      );
+      CREATE TABLE routines (
+        id SERIAL PRIMARY KEY,
+        creator_id INTEGER REFERENCES users(id),
+        is_public BOOLEAN DEFAULT false,
+        name VARCHAR(255) UNIQUE NOT NULL,
+        goal TEXT NOT NULL
+      );
+      CREATE TABLE activities (
+        id SERIAL PRIMARY KEY, 
+        name VARCHAR (255) UNIQUE NOT NULL,
+        description TEXT NOT NULL
+      );
+      CREATE TABLE routine_activities (
+        id SERIAL PRIMARY KEY,
+        routine_id INTEGER UNIQUE REFERENCES routines (id),
+        activity_id INTEGER UNIQUE REFERENCES activities (id),
+        duration INTEGER,
+        count INTEGER
+      );
+
+    `);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function populateTables() {
