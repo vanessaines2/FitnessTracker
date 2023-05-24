@@ -12,18 +12,40 @@ async function createUser({ username, password }) {
   );
   return user;
 }
-
-async function getAllUsers() {
+// may need to revise this function
+async function getUser({ username, password }) {
   const { rows } = await client.query(`
     SELECT * FROM users;
     `);
   return rows;
 }
 
-async function getUser() {}
+async function getUserById(id) {
+  const {
+    rows: [user],
+  } = await client.query(`
+  SELECT id, username 
+  FROM users
+  WHERE id=${id};`);
+  return user;
+}
 
-async function getUserById() {}
+async function getUserByUsername(username) {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+    SELECT * 
+    FROM users
+    WHERE username=$1;
+    `,
+      [username]
+    );
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-async function getUserByUsername() {}
-
-module.exports = { createUser, getAllUsers };
+module.exports = { createUser, getUser, getUserById, getUserByUsername };
