@@ -84,6 +84,18 @@ async function populateTables() {
       await createUser(user);
     }
     console.log("..users tables populated!");
+    console.log("starting to populate activities");
+    // // await client.query(
+    // //   `INSERT INTO activities (name, description)
+    // //    VALUES ($1,$2)
+    // //    `,
+    // //   [name, description]
+    // // );
+
+    // for (const activity of activities) {
+    //   await createActivity(name, description);
+    // }
+    console.log("Activity created!");
   } catch (error) {
     console.log(error);
   }
