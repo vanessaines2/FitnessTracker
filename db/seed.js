@@ -1,3 +1,4 @@
+const { createUser } = require("./adapters/users");
 const client = require("./client");
 const {
   users,
@@ -60,6 +61,16 @@ async function createTables() {
 
 async function populateTables() {
   // Seed tables with dummy data from seedData.js
+
+  try {
+    console.log("..starting to populate tables..");
+    for (const user of users) {
+      await createUser(user);
+    }
+    console.log("..users tables populated!");
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function rebuildDb() {
