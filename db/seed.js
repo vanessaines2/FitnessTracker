@@ -1,5 +1,4 @@
 const client = require("./client");
-const { createUser } = require("./adapters/users");
 const {
   createUser,
   getUser,
@@ -17,9 +16,9 @@ const {
   getRoutineActivityById,
   addActivityToRoutine,
   updateRoutineActivity,
-  getRoutineActivityByRoutine,
+  getRoutineActivitiesByRoutine,
   destroyRoutineActivity,
-} = require("./adapters/routine_activites");
+} = require("./adapters/routine_activities");
 
 const {
   users,
@@ -47,82 +46,46 @@ async function createTables() {
   console.log("...starting to build tables...");
   try {
     await client.query(`
-    CREATE TABLE users (
-      id SERIAL PRIMARY KEY,
-      username varchar(255) UNIQUE NOT NULL,
-      password varchar (255) NOT NULL    
-      );
-      CREATE TABLE routines (
-        id SERIAL PRIMARY KEY,
-        creator_id INTEGER REFERENCES users(id),
-        is_public BOOLEAN DEFAULT false,
-        name VARCHAR(255) UNIQUE NOT NULL,
-        goal TEXT NOT NULL
-      );
-      CREATE TABLE activities (
-        id SERIAL PRIMARY KEY, 
-        name VARCHAR (255) UNIQUE NOT NULL,
-        description TEXT NOT NULL
-      );
-      CREATE TABLE routine_activities (
-        id SERIAL PRIMARY KEY,
-        routine_id INTEGER UNIQUE REFERENCES routines (id),
-        activity_id INTEGER UNIQUE REFERENCES activities (id),
-        duration INTEGER,
-        count INTEGER
-      );
-
-    `);
+        CREATE TABLE users (
+          id SERIAL PRIMARY KEY,
+          username varchar(255) UNIQUE NOT NULL,
+          password varchar (255) NOT NULL
+          );
+          CREATE TABLE routines (
+            id SERIAL PRIMARY KEY,
+            creator_id INTEGER REFERENCES users(id),
+            is_public BOOLEAN DEFAULT false,
+            name VARCHAR(255) UNIQUE NOT NULL,
+            goal TEXT NOT NULL
+          );
+          CREATE TABLE activities (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR (255) UNIQUE NOT NULL,
+            description TEXT NOT NULL
+          );
+          CREATE TABLE routine_activities (
+            id SERIAL PRIMARY KEY,
+            routine_id INTEGER UNIQUE REFERENCES routines (id),
+            activity_id INTEGER UNIQUE REFERENCES activities (id),
+            duration INTEGER,
+            count INTEGER
+          );
+          `);
     console.log("Finished building tables!");
   } catch (error) {
     throw error;
   }
 }
 
-
 async function populateTables() {
-
-//   console.log("populating with data");
-//   try {
-//     const user = await createUser({ username: "Burger", password: King });
-//   } catch (error) {
-//     console.log("Didnt work");
-
-  // Seed tables with dummy data from seedData.js
-
   try {
-    await client.query(
-      `
-    INSERT INTO users(username, password)
-    VALUES ($1, $2)
-    `,
-      users
-    );
-
-    await client.query(
-      `
-    INSERT INTO routines(creator_id, is_public, name, goal)
-    VALUES ($1,$2,$3,$4)
-    `,
-      routines
-    );
-
-    await client.query(
-      `INSERT INTO routine_activities(routine_id, activity_id, count, duration)
-       VALUES ($1,$2,$3,$4)
-       `,
-      routine_activities
-    );
-
-    await client.query(
-      `INSERT INTO activities(name, description)
-        VALUES ($1,$2)
-        `,
-      activities
-    );
+    console.log("..starting to populate tables..");
+    for (const user of users) {
+      await createUser(user);
+    }
+    console.log("..users tables populated!");
   } catch (error) {
     console.log(error);
-
   }
 }
 

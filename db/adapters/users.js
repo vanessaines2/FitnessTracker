@@ -31,7 +31,7 @@ async function getUser({ username, password }) {
   } catch (error) {
     throw error;
   }
-
+}
 
 async function getUserById(id) {
   try {

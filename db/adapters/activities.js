@@ -30,7 +30,7 @@ async function getAllActivities() {
 
 async function createActivity(name, description) {
   try {
-    const newActivity = awaitclient.query(
+    const newActivity = await client.query(
       `INSERT INTO activities(name, description)
             VALUES ($1, $2)
             ON CONFLICT(name) DO NOTHING`[(name, description)]
@@ -42,23 +42,24 @@ async function createActivity(name, description) {
 }
 
 async function updateActivity(activityId, name, description) {
-    try {
-        const rows [activity] = await client.query(
-            `UPDATE activities
+  try {
+    const {
+      rows: [activity],
+    } = await client.query(
+      `UPDATE activities
             SET "name" =$2, "description" =$3
             WHERE id=$1
-            RETURN * ` [activityId, name, description]
-        );
-        return activity;
-    } catch (error) {
-        throw error;
-        
-    }
+            RETURN * `[(activityId, name, description)]
+    );
+    return activity;
+  } catch (error) {
+    throw error;
+  }
 }
 
 module.exports = {
-    getActivityById,
-    getAllActivities,
-    createActivity,
-    updateActivity,
-  };
+  getActivityById,
+  getAllActivities,
+  createActivity,
+  updateActivity,
+};
