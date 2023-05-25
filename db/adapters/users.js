@@ -12,24 +12,43 @@ async function createUser({ username, password }) {
     [username, password]
   );
 }
-return user;
 
-// may need to revise this function
-async function getUsers({ username, password }) {
-  const { rows } = await client.query(`
-    SELECT * FROM users;
-    `);
-  return user;
-}
+async function getUser({ username, password }) {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+    SELECT * FROM users
+    WHERE username=$1
+    `,
+      [username]
+    );
+
+    const res = bcrypt.compareSync(password, user.password);
+
+    return res;
+  } catch (error) {
+    throw error;
+  }
+
 
 async function getUserById(id) {
-  const {
-    rows: [user],
-  } = await client.query(`
-  SELECT id, username 
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+  SELECT *
   FROM users
-  WHERE id=${id};`);
-  return user;
+  WHERE id=$1;
+  `,
+      [id]
+    );
+    return user;
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function getUserByUsername(username) {
@@ -50,4 +69,4 @@ async function getUserByUsername(username) {
   }
 }
 
-module.exports = { createUser, getUsers, getUserById, getUserByUsername };
+module.exports = { createUser, getUser, getUserById, getUserByUsername };
