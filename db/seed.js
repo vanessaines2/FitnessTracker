@@ -1,3 +1,4 @@
+const { createUser } = require("./adapters/users");
 const client = require("./client");
 const { createUser } = require("./adapters/users");
 const {
@@ -61,13 +62,26 @@ async function createTables() {
   }
 }
 
-// Seed tables with dummy data from seedData.js
+
 async function populateTables() {
-  console.log("populating with data");
+
+//   console.log("populating with data");
+//   try {
+//     const user = await createUser({ username: "Burger", password: King });
+//   } catch (error) {
+//     console.log("Didnt work");
+
+  // Seed tables with dummy data from seedData.js
+
   try {
-    const user = await createUser({ username: "Burger", password: King });
+    console.log("..starting to populate tables..");
+    for (const user of users) {
+      await createUser(user);
+    }
+    console.log("..users tables populated!");
   } catch (error) {
-    console.log("Didnt work");
+    console.log(error);
+
   }
 }
 

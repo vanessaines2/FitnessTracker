@@ -9,3 +9,5 @@ async function updateRoutineActivity() {}
 async function destroyRoutineActivity() {}
 
 async function getRoutineActivitiesByRoutine() {}
+
+module.exports = {};

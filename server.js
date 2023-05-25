@@ -4,7 +4,8 @@ const morgan = require("morgan");
 const PORT = 3001;
 const server = express();
 const client = require("./db/client");
-client.connect;
+
+client.connect();
 
 // Middleware
 server.use(morgan("dev"));
@@ -27,5 +28,4 @@ server.use((err, req, res, next) => {
 
 server.listen(PORT, () => {
   console.log(`Listening on PORT ${PORT}`);
-
 });
