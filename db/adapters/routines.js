@@ -38,8 +38,6 @@ async function getRoutineById(id) {
       rows: [routine],
     } = await client.query(
       `
-      SELECT 
-   
     `,
       [id]
     );
@@ -48,10 +46,23 @@ async function getRoutineById(id) {
     console.log(error);
   }
 }
-
+async function getAllPublicRoutines() {
+  try {
+    const {
+      rows: [routine],
+    } = await client.query(`
+    SELECT * 
+    FROM routines 
+    JOIN activities
+    ON routines.id = activities.id
+    WHERE is_public = true 
+    `);
+  } catch (error) {
+    console.log(error);
+  }
+}
 async function getRoutinesWithoutActivities() {}
 
-async function getAllPublicRoutines() {}
 async function getAllRoutinesByUser() {}
 async function getPublicRoutinesByUser() {}
 async function getPublicRoutinesByActivity() {}
@@ -59,4 +70,9 @@ async function getPublicRoutinesByActivity() {}
 async function updateRoutine() {}
 async function destroyRoutine() {}
 
-module.exports = { createRoutine, getAllRoutines, getRoutineById };
+module.exports = {
+  createRoutine,
+  getAllRoutines,
+  getRoutineById,
+  getAllPublicRoutines,
+};
