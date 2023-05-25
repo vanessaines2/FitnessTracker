@@ -20,7 +20,7 @@ async function getAllActivities() {
   try {
     let { rows } = await client.query(
       `SELECT * 
-            FROM activities`
+            FROM activities;`
     );
     return rows;
   } catch (error) {
@@ -51,7 +51,8 @@ async function updateActivity(activityId, name, description) {
       `UPDATE activities
             SET "name" =$2, "description" =$3
             WHERE id=$1
-            RETURN * `[(activityId, name, description)]
+            RETURN *; `,
+      [(activityId, name, description)]
     );
     return activity;
   } catch (error) {
