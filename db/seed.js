@@ -1,5 +1,25 @@
-const { createUser } = require("./adapters/users");
 const client = require("./client");
+const {
+  createUser,
+  getUser,
+  getUserById,
+  getUserByUsername,
+} = require("./adapters/users");
+
+const {
+  getActivityById,
+  getAllActivities,
+  createActivity,
+  updateActivity,
+} = require("./adapters/activities");
+const {
+  getRoutineActivityById,
+  addActivityToRoutine,
+  updateRoutineActivity,
+  getRoutineActivityByRoutine,
+  destroyRoutineActivity,
+} = require("./adapters/routine_activites");
+
 const {
   users,
   activities,
@@ -9,15 +29,12 @@ const {
 
 async function dropTables() {
   try {
-    console.log("Starting to drop tables...");
     await client.query(`
     DROP TABLE IF EXISTS routine_activities;
     DROP TABLE IF EXISTS routines;
     DROP TABLE IF EXISTS activities;
     DROP TABLE IF EXISTS users;
     `);
-
-    console.log("Finished dropping tables!");
   } catch (error) {
     console.error("Error dropping tables!");
     throw error;
@@ -26,7 +43,6 @@ async function dropTables() {
 
 async function createTables() {
   try {
-    console.log("...starting to build tables...");
     await client.query(`
     CREATE TABLE users (
       id SERIAL PRIMARY KEY,
@@ -55,7 +71,7 @@ async function createTables() {
 
     `);
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 }
 
@@ -63,11 +79,35 @@ async function populateTables() {
   // Seed tables with dummy data from seedData.js
 
   try {
-    console.log("..starting to populate tables..");
-    for (const user of users) {
-      await createUser(user);
-    }
-    console.log("..users tables populated!");
+    await client.query(
+      `
+    INSERT INTO users(username, password)
+    VALUES ($1, $2)
+    `,
+      users
+    );
+
+    await client.query(
+      `
+    INSERT INTO routines(creator_id, is_public, name, goal)
+    VALUES ($1,$2,$3,$4)
+    `,
+      routines
+    );
+
+    await client.query(
+      `INSERT INTO routine_activities(routine_id, activity_id, count, duration)
+       VALUES ($1,$2,$3,$4)
+       `,
+      routine_activities
+    );
+
+    await client.query(
+      `INSERT INTO activities(name, description)
+        VALUES ($1,$2)
+        `,
+      activities
+    );
   } catch (error) {
     console.log(error);
   }
@@ -76,9 +116,15 @@ async function populateTables() {
 async function rebuildDb() {
   client.connect();
   try {
+    console.log("..starting to drop tables..");
     await dropTables();
+    console.log("Finished dropping tables!");
+    console.log("..starting to build tables..");
     await createTables();
+    console.log("Tables Created!");
+    console.log("..starting to populate tables..");
     await populateTables();
+    console.log("Tables Populated!");
   } catch (error) {
     console.error(error);
   } finally {
