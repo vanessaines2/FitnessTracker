@@ -10,14 +10,15 @@ async function createUser({ username, password }) {
         RETURNING *;
         `[(username, password)]
   );
-  return user;
 }
+return user;
+
 // may need to revise this function
 async function getUsers({ username, password }) {
   const { rows } = await client.query(`
     SELECT * FROM users;
     `);
-  return rows;
+  return user;
 }
 
 async function getUserById(id) {
