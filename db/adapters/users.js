@@ -11,9 +11,8 @@ async function createUser({ username, password }) {
         `,
     [username, password]
   );
-  return user;
 }
-// may need to revise this function..fixed(wj)
+
 async function getUser({ username, password }) {
   try {
     const {
@@ -32,7 +31,7 @@ async function getUser({ username, password }) {
   } catch (error) {
     throw error;
   }
-}
+
 
 async function getUserById(id) {
   try {
