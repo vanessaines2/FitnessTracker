@@ -1,5 +1,6 @@
 const { createUser } = require("./adapters/users");
 const client = require("./client");
+const { createUser } = require("./adapters/users");
 const {
   users,
   activities,
@@ -8,8 +9,8 @@ const {
 } = require("./seedData");
 
 async function dropTables() {
+  console.log("Starting to drop tables...");
   try {
-    console.log("Starting to drop tables...");
     await client.query(`
     DROP TABLE IF EXISTS routine_activities;
     DROP TABLE IF EXISTS routines;
@@ -25,8 +26,8 @@ async function dropTables() {
 }
 
 async function createTables() {
+  console.log("...starting to build tables...");
   try {
-    console.log("...starting to build tables...");
     await client.query(`
     CREATE TABLE users (
       id SERIAL PRIMARY KEY,
@@ -54,12 +55,22 @@ async function createTables() {
       );
 
     `);
+    console.log("Finished building tables!");
   } catch (error) {
-    console.log(error);
+    console.error("Error building tables!");
+    throw error;
   }
 }
 
+
 async function populateTables() {
+
+//   console.log("populating with data");
+//   try {
+//     const user = await createUser({ username: "Burger", password: King });
+//   } catch (error) {
+//     console.log("Didnt work");
+
   // Seed tables with dummy data from seedData.js
 
   try {
@@ -70,6 +81,7 @@ async function populateTables() {
     console.log("..users tables populated!");
   } catch (error) {
     console.log(error);
+
   }
 }
 
@@ -80,7 +92,7 @@ async function rebuildDb() {
     await createTables();
     await populateTables();
   } catch (error) {
-    console.error(error);
+    console.log("NO luck with the DBrebuild");
   } finally {
     client.end();
   }
