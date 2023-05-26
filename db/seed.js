@@ -13,6 +13,7 @@ const {
   updateActivity,
 } = require("./adapters/activities");
 const {
+  createRoutineActivity,
   getRoutineActivityById,
   addActivityToRoutine,
   updateRoutineActivity,
@@ -23,11 +24,6 @@ const {
 const {
   users,
   activities,
-  creator_id,
-  is_public,
-  goal,
-  name,
-  description,
   routines,
   routine_activities,
 } = require("./seedData");
@@ -71,10 +67,11 @@ async function createTables() {
           );
           CREATE TABLE routine_activities (
             id SERIAL PRIMARY KEY,
-            routine_id INTEGER UNIQUE REFERENCES routines (id),
-            activity_id INTEGER UNIQUE REFERENCES activities (id),
+            routine_id INTEGER REFERENCES routines (id),
+            activity_id INTEGER REFERENCES activities (id),
             duration INTEGER,
-            count INTEGER
+            count INTEGER,
+            UNIQUE(routine_id, activity_id)
           );
           `);
     console.log("Finished building tables!");
@@ -85,24 +82,15 @@ async function createTables() {
 
 async function populateTables() {
   try {
-    console.log("..starting to populate tables..");
+    console.log("..starting to populate users tables..");
     for (const user of users) {
       await createUser(user);
     }
     console.log("..users tables populated!");
     console.log("starting to populate activities");
-    // // await client.query(
-    // //   `INSERT INTO activities (name, description)
-    // //    VALUES ($1,$2)
-    // //    `,
-    // //   [name, description]
-    // // );
 
-    // for (const activity of activities) {
-    //   await createActivity(name, description);
-    // }
     // for (const routine of routines) {
-    //   await createRoutine(creator_id, is_public, name, goal);
+    //   await createRoutine(routine);
     // }
 
     console.log("Activity created!");

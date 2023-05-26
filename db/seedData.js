@@ -22,8 +22,8 @@ const routine_activities = [
   {
     routine_id: 1,
     activity_id: 1,
-    duration: "",
-    count: "",
+    duration: "100",
+    count: "10",
   },
 ];
 

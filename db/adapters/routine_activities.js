@@ -1,5 +1,7 @@
 const client = require("../client");
 
+async function createRoutineActivity() {}
+
 async function getRoutineActivitiesByRoutine(routineId) {
   try {
     const {
@@ -87,4 +89,5 @@ module.exports = {
   addActivityToRoutine,
   updateRoutineActivity,
   destroyRoutineActivity,
+  createRoutineActivity,
 };
