@@ -23,9 +23,15 @@ const {
 const {
   users,
   activities,
+  creator_id,
+  is_public,
+  goal,
+  name,
+  description,
   routines,
   routine_activities,
 } = require("./seedData");
+const { createRoutine } = require("./adapters/routines");
 
 async function dropTables() {
   console.log("Starting to drop tables...");
@@ -95,6 +101,10 @@ async function populateTables() {
     // for (const activity of activities) {
     //   await createActivity(name, description);
     // }
+    // for (const routine of routines) {
+    //   await createRoutine(creator_id, is_public, name, goal);
+    // }
+
     console.log("Activity created!");
   } catch (error) {
     console.log(error);

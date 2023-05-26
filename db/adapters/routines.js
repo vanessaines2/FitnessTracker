@@ -1,12 +1,12 @@
 const client = require("../client");
 
-async function createRoutine({ creator_id, is_public, name, goal }) {
+async function createRoutine(creator_id, is_public, name, goal) {
   try {
     const {
       rows: [routine],
     } = await client.query(
       `INSERT INTO routines(creator_id, is_public, name, goal)
-      VALUES($1,$2,$3,$4)
+      VALUES ($1,$2,$3,$4)
       ON CONFLICT (name) DO NOTHING
       RETURNING *;
       `,
@@ -22,8 +22,9 @@ async function getAllRoutines() {
   try {
     const { rows } = await client.query(
       `
-      SELECT * FROM routines
-      INNER JOIN activities
+      SELECT * 
+      FROM routines
+      JOIN activities
       ON routines.id = activities.id
       `
     );
@@ -38,6 +39,11 @@ async function getRoutineById(id) {
       rows: [routine],
     } = await client.query(
       `
+      SELECT routines.name, activities.name 
+      FROM routines 
+      JOIN activities 
+      ON routines.id = activities.id
+      WHERE routine.id = ${id}
     `,
       [id]
     );
@@ -61,7 +67,17 @@ async function getAllPublicRoutines() {
     console.log(error);
   }
 }
+async function getPublicRoutinesByUser(username) {
+  try {
+    const {
+      rows: [routine],
+    } = client.query(
+      `
 
+      `
+    );
+  } catch (error) {}
+}
 async function getAllRoutinesByUser(userId) {
   try {
     const {
@@ -71,7 +87,8 @@ async function getAllRoutinesByUser(userId) {
       SELECT * 
       FROM routines
       WHERE "creator_id" =${userId}
-      `
+      `,
+      [userId]
     );
   } catch (error) {
     console.log(error);
@@ -85,11 +102,25 @@ async function getRoutinesWithoutActivities() {
   }
 }
 
-async function getPublicRoutinesByUser() {}
-async function getPublicRoutinesByActivity() {}
+async function getPublicRoutinesByActivity() {
+  try {
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-async function updateRoutine() {}
-async function destroyRoutine() {}
+async function updateRoutine() {
+  try {
+  } catch (error) {
+    throw error;
+  }
+}
+async function destroyRoutine() {
+  try {
+  } catch (error) {
+    throw error;
+  }
+}
 
 module.exports = {
   createRoutine,
@@ -97,4 +128,5 @@ module.exports = {
   getRoutineById,
   getAllPublicRoutines,
   getAllRoutinesByUser,
+  getPublicRoutinesByUser,
 };

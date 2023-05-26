@@ -6,7 +6,7 @@ async function getRoutineActivitiesByRoutine(routineId) {
       rows: [routineActivity],
     } = await client.query(
       ` SELECT *
-            FROM routine-activities
+            FROM routine_activities
             WHERE routine_id = $1`,
       [routineId]
     );
