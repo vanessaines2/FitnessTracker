@@ -1,12 +1,14 @@
 const client = require("../client");
 
+async function createRoutineActivity() {}
+
 async function getRoutineActivitiesByRoutine(routineId) {
   try {
     const {
       rows: [routineActivity],
     } = await client.query(
       ` SELECT *
-            FROM routine-activities
+            FROM routine_activities
             WHERE routine_id = $1`,
       [routineId]
     );
@@ -87,4 +89,5 @@ module.exports = {
   addActivityToRoutine,
   updateRoutineActivity,
   destroyRoutineActivity,
+  createRoutineActivity,
 };

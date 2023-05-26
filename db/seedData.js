@@ -10,7 +10,21 @@ const activities = [
   { name: "bicep curl", description: "Arms" },
   { name: "walking", description: "Cardio" },
 ];
-const routines = [];
-const routine_activities = [];
+const routines = [
+  {
+    creator_id: 1,
+    is_public: true,
+    name: "Jessica",
+    goal: "get fit",
+  },
+];
+const routine_activities = [
+  {
+    routine_id: 1,
+    activity_id: 1,
+    duration: "100",
+    count: "10",
+  },
+];
 
 module.exports = { users, activities, routines, routine_activities };
