@@ -159,49 +159,95 @@ async function getPublicRoutinesByUser(username) {
     console.error(error);
   }
 }
-async function getAllRoutinesByUser(userId) {
-  try {
-    const {
-      rows: [routine],
-    } = await client.query(
-      `
-      SELECT * 
+async function getAllRoutinesByUser(username) {
+  const { rows } = client.query(
+    `
+    SELECT 
+      routines.id as id,
+      routines.name as name,
+      routines.goal as goal,
+      CASE WHEN routine_activities.routine_id IS NULL THEN '[]'::json
+      ELSE
+      JSON_AGG(
+        JSON_BUILD_OBJECT(
+          'id', activities.id,
+          'name', activities.name,
+          'description', activities.description,
+          'duration', routine_activities.duration,
+          'count', routine_activities.count
+          
+        )
+      ) END AS activities
       FROM routines
-      WHERE creator_id =${userId};
-      `,
-      [userId]
-    );
-  } catch (error) {
-    console.log(error);
-  }
+      JOIN users 
+      ON routines.creator_id = users.id
+      FULL OUTER JOIN routine_activities 
+      ON routines.id = routine_activities.routine_id
+      FULL OUTER JOIN activities
+      ON activities.id = routine_activities.activity_id
+      WHERE users.username = $1 
+      GROUP BY routines.id, routine_activities.routine_id
+    `,
+    [username]
+  );
+  return rows;
 }
 
 async function getRoutinesWithoutActivities() {
-  try {
-  } catch (error) {
-    console.log(error);
-  }
+  const {
+    rows: [routine],
+  } = client.query(
+    `SELECT * 
+    FROM routines ;
+    `
+  );
+  return routine;
 }
 
-async function getPublicRoutinesByActivity() {
-  try {
-  } catch (error) {
-    console.log(error);
-  }
+async function getPublicRoutinesByActivity(activityId) {
+  const { rows } = client.query(
+    `
+    SELECT 
+      routines.id as id,
+      routines.name as name,
+      routines.goal as goal,
+      CASE WHEN routine_activities.routine_id IS NULL THEN '[]'::json
+      ELSE
+      JSON_AGG(
+        JSON_BUILD_OBJECT(
+          'id', activities.id,
+          'name', activities.name,
+          'description', activities.description,
+          'duration', routine_activities.duration,
+          'count', routine_activities.count
+          
+        )
+      ) END AS activities
+      FROM routines
+      JOIN users 
+      ON routines.creator_id = users.id
+      FULL OUTER JOIN routine_activities 
+      ON routines.id = routine_activities.routine_id
+      FULL OUTER JOIN activities
+      ON activities.id = routine_activities.activity_id
+      WHERE activities.id = ${activityId} AND routines.is_public = true
+      GROUP BY routines.id, routine_activities.routine_id
+    `,
+    [activityId]
+  );
+  return rows;
 }
 
-async function updateRoutine() {
-  try {
-  } catch (error) {
-    throw error;
-  }
+async function destroyRoutine(routineId) {
+  const { rows } = client.query(
+    `
+    DELETE FROM routines 
+    WHERE id= ${routineId}
+    `,
+    [routineId]
+  );
 }
-async function destroyRoutine() {
-  try {
-  } catch (error) {
-    throw error;
-  }
-}
+async function updateRoutine() {}
 
 module.exports = {
   createRoutine,
