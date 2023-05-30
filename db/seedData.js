@@ -1,9 +1,11 @@
 // Create dummy data to seed into your DB
 const users = [
-  { username: "Wanda", password: 12345678 },
-  { username: "Jessica", password: 1234567 },
-  { username: "Vanessa", password: 123567 },
+  { username: "Wanda", password: "1234567" },
+  { username: "Jessica", password: "1234567" },
+  { username: "Vanessa", password: "1234567" },
+  { username: "Malachi", password: "12345" },
 ];
+
 const activities = [
   { name: "squats", description: "Legs" },
   { name: "push ups", description: "Chest" },
@@ -12,18 +14,20 @@ const activities = [
 ];
 const routines = [
   {
-    creator_id: 1,
     is_public: true,
-    name: "Jessica",
+    name: "tuesday training",
+    goal: "get fit",
+  },
+  {
+    is_public: false,
+    name: "wednesday workout",
     goal: "get fit",
   },
 ];
 const routine_activities = [
   {
-    routine_id: 1,
-    activity_id: 1,
-    duration: "100",
-    count: "10",
+    duration: "45",
+    count: "25",
   },
 ];
 

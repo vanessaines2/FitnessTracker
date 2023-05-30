@@ -1,6 +1,6 @@
 const client = require("../client");
 
-async function createRoutineActivity() {}
+// async function createRoutineActivity() {}
 
 async function getRoutineActivitiesByRoutine(routineId) {
   try {
@@ -9,7 +9,8 @@ async function getRoutineActivitiesByRoutine(routineId) {
     } = await client.query(
       ` SELECT *
             FROM routine_activities
-            WHERE routine_id = $1`,
+            WHERE routine_id = $1;
+            `,
       [routineId]
     );
     return routineActivity;
@@ -25,7 +26,8 @@ async function getRoutineActivityById(routineActivityId) {
     } = await client.query(
       `SELECT * 
             FROM routine_activities
-            WHERE id=$1`,
+            WHERE id=$1;
+            `,
       [routineActivityId]
     );
     return routineActivity;
@@ -35,12 +37,13 @@ async function getRoutineActivityById(routineActivityId) {
 }
 
 async function addActivityToRoutine(routineId, activityId, count, duration) {
+  console.log("routineId %d   activiityID %d", routineId, activityId);
   try {
     const { rows } = await client.query(
       `
             INSERT INTO routine_activities(routine_id, activity_id, count, duration)
             VALUES($1, $2, $3, $4)
-            RETURN *
+            RETURNING *;
             `,
       [routineId, activityId, count, duration]
     );
@@ -58,7 +61,8 @@ async function updateRoutineActivity(routineActivityId, count, duration) {
       ` UPDATE routine_activities
             SET "count" = $2, "duration" =$3
             WHERE id= $1
-            RETURN * `,
+            RETURNING *; 
+            `,
       [routineActivityId, count, duration]
     );
     return routineActivity;
@@ -89,5 +93,4 @@ module.exports = {
   addActivityToRoutine,
   updateRoutineActivity,
   destroyRoutineActivity,
-  createRoutineActivity,
 };
