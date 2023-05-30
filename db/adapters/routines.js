@@ -3,18 +3,19 @@ const client = require("../client");
 async function createRoutine(creator_id, is_public, name, goal) {
   try {
     const {
-      rows: [routine],
+      rows: [row],
     } = await client.query(
       `INSERT INTO routines(creator_id, is_public, name, goal)
       VALUES ($1,$2,$3,$4)
-      ON CONFLICT (name) DO NOTHING
+      ON CONFLICT (creator_id, name) DO NOTHING
       RETURNING *;
       `,
       [creator_id, is_public, name, goal]
     );
-    return routine;
+    console.log("printing row %s", row);
+    return row;
   } catch (error) {
-    console.log(error);
+    console.log("Error creating routines " + error.stack);
   }
 }
 
@@ -209,4 +210,8 @@ module.exports = {
   getAllPublicRoutines,
   getAllRoutinesByUser,
   getPublicRoutinesByUser,
+  getRoutinesWithoutActivities,
+  getPublicRoutinesByActivity,
+  updateRoutine,
+  destroyRoutine,
 };

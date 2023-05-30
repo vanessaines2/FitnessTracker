@@ -1,19 +1,23 @@
 const client = require("../client");
 
-async function createUser({ username, password }) {
+async function createUser(username, password) {
+  console.log("Here user: " + username + " password: " + password);
+
   const {
     rows: [user],
   } = await client.query(
-    `INSERT INTO users(username, password)
+    `
+        INSERT INTO users(username, password)
         VALUES ($1, $2)
         ON CONFLICT (username) DO NOTHING
         RETURNING *;
-        `,
+     `,
     [username, password]
   );
+  return user;
 }
 
-async function getUser({ username, password }) {
+async function getUser(username, password) {
   try {
     const {
       rows: [user],
@@ -25,14 +29,17 @@ async function getUser({ username, password }) {
       [username]
     );
 
-    const res = bcrypt.compareSync(password, user.password);
+    // const res = bcrypt.compareSync(password, user.password);
 
-    return res;
+    if (res) {
+      return user;
+    } else {
+      throw error;
+    }
   } catch (error) {
     throw error;
   }
 }
-
 async function getUserById(id) {
   try {
     const {

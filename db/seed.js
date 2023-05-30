@@ -1,25 +1,8 @@
 const client = require("./client");
-const {
-  createUser,
-  getUser,
-  getUserById,
-  getUserByUsername,
-} = require("./adapters/users");
-
-const {
-  getActivityById,
-  getAllActivities,
-  createActivity,
-  updateActivity,
-} = require("./adapters/activities");
-const {
-  createRoutineActivity,
-  getRoutineActivityById,
-  addActivityToRoutine,
-  updateRoutineActivity,
-  getRoutineActivitiesByRoutine,
-  destroyRoutineActivity,
-} = require("./adapters/routine_activities");
+const { createUser } = require("./adapters/users");
+const { createActivity } = require("./adapters/activities");
+const { createRoutine } = require("./adapters/routines");
+const { addActivityToRoutine } = require("./adapters/routine_activities");
 
 const {
   users,
@@ -27,11 +10,10 @@ const {
   routines,
   routine_activities,
 } = require("./seedData");
-const { createRoutine } = require("./adapters/routines");
 
 async function dropTables() {
-  console.log("Starting to drop tables...");
   try {
+    console.log("...starting to drop tables...");
     await client.query(`
     DROP TABLE IF EXISTS routine_activities;
     DROP TABLE IF EXISTS routines;
@@ -57,8 +39,9 @@ async function createTables() {
             id SERIAL PRIMARY KEY,
             creator_id INTEGER REFERENCES users(id),
             is_public BOOLEAN DEFAULT false,
-            name VARCHAR(255) UNIQUE NOT NULL,
-            goal TEXT NOT NULL
+            name VARCHAR(255) NOT NULL,
+            goal TEXT NOT NULL,
+            UNIQUE(creator_id, name)
           );
           CREATE TABLE activities (
             id SERIAL PRIMARY KEY,
@@ -76,41 +59,80 @@ async function createTables() {
           `);
     console.log("Finished building tables!");
   } catch (error) {
+    console.error("Error creating table");
     throw error;
   }
 }
 
 async function populateTables() {
+  console.log("..starting to populate...");
   try {
-    console.log("..starting to populate users tables..");
-    for (const user of users) {
-      await createUser(user);
+    const activityIDs = [];
+
+    for (const activity of activities) {
+      const createdActivity = await createActivity(
+        activity.name,
+        activity.description
+      );
+      console.log("Activity:", createdActivity);
+
+      activityIDs.push(createdActivity.id);
     }
-    console.log("..users tables populated!");
-    console.log("starting to populate activities");
 
-    // for (const routine of routines) {
-    //   await createRoutine(routine);
-    // }
+    const userIDs = [];
 
-    console.log("Activity created!");
+    for (const user of users) {
+      console.log("user: " + user.username + " password: " + user.password);
+      const createdUser = await createUser(user.username, user.password);
+
+      userIDs.push(createdUser.id);
+    }
+
+    // Create Routine Activities for each user
+    for (const userId of userIDs) {
+      // user Routine
+      const userRoutineIDs = [];
+
+      for (const routine of routines) {
+        const createdRoutine = await createRoutine(
+          userId,
+          routine.is_public,
+          routine.name,
+          routine.goal
+        );
+        console.log(createdRoutine);
+
+        userRoutineIDs.push(createdRoutine.id);
+      }
+
+      console.log(userRoutineIDs);
+
+      for (const routine_activity of routine_activities) {
+        const activityID =
+          activityIDs[Math.floor(Math.random() * activityIDs.length)];
+
+        const userRoutineID =
+          userRoutineIDs[Math.floor(Math.random() * userRoutineIDs.length)];
+        const createdRoutineActivity = await addActivityToRoutine(
+          userRoutineID,
+          activityID,
+          routine_activity.count,
+          routine_activity.duration
+        );
+      }
+    }
+    console.log("YO");
   } catch (error) {
-    console.log(error);
+    console.error("Population Trouble!!!" + error.stack);
   }
 }
 
 async function rebuildDb() {
   client.connect();
   try {
-    console.log("..starting to drop tables..");
     await dropTables();
-    console.log("Finished dropping tables!");
-    console.log("..starting to build tables..");
     await createTables();
-    console.log("Tables Created!");
-    console.log("..starting to populate tables..");
     await populateTables();
-    console.log("Tables Populated!");
   } catch (error) {
     console.log("NO luck with the DBrebuild");
   } finally {
