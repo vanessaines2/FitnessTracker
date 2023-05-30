@@ -230,7 +230,7 @@ async function getPublicRoutinesByActivity(activityId) {
       ON routines.id = routine_activities.routine_id
       FULL OUTER JOIN activities
       ON activities.id = routine_activities.activity_id
-      WHERE activities.id = ${activityId} AND routines.is_public = true
+      WHERE activities.id = $1 AND routines.is_public = true
       GROUP BY routines.id, routine_activities.routine_id
     `,
     [activityId]
@@ -242,7 +242,7 @@ async function destroyRoutine(routineId) {
   const { rows } = client.query(
     `
     DELETE FROM routines 
-    WHERE id= ${routineId}
+    WHERE id= $1
     `,
     [routineId]
   );
