@@ -124,7 +124,7 @@ async function getAllPublicRoutines() {
 }
 async function getPublicRoutinesByUser(username) {
   try {
-    const { rows } = client.query(
+    const { rows } = await client.query(
       `
       SELECT 
         routines.id as id,
@@ -160,7 +160,7 @@ async function getPublicRoutinesByUser(username) {
   }
 }
 async function getAllRoutinesByUser(username) {
-  const { rows } = client.query(
+  const { rows } = await client.query(
     `
     SELECT 
       routines.id as id,
@@ -239,7 +239,7 @@ async function getPublicRoutinesByActivity(activityId) {
 }
 
 async function destroyRoutine(routineId) {
-  const { rows } = client.query(
+  const { rows } = await client.query(
     `
     DELETE FROM routines 
     WHERE id= $1
