@@ -41,6 +41,7 @@ activitiesRouter.get("/", async (req, res, next) => {
 
 activitiesRouter.patch("/:activityId", async (req, res, next) => {
   try {
+    const { activityId } = req.params;
     const updatedActivity = await updateActivity(activityId, name, description);
     res.send({
       status: 200,

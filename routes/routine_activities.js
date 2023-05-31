@@ -11,7 +11,9 @@ const {
 //localhost:3001/api/routineActivities/
 routineActivitiesRouter.patch("/:routineActivityId", async (req, res, next) => {
   try {
-    const routineActivity = await updateRoutineActivity(
+    const { routineActivityId } = req.params;
+    const { count, duration } = req.body;
+    const updatedRoutineActivity = await updateRoutineActivity(
       routineActivityId,
       count,
       duration
@@ -20,7 +22,7 @@ routineActivitiesRouter.patch("/:routineActivityId", async (req, res, next) => {
       // 200 - is an ok status
       status: 200,
       status_message: "updated routine activity",
-      data: updateRoutineActivity,
+      data: updatedRoutineActivity,
     });
   } catch (error) {
     next(error);
@@ -31,6 +33,7 @@ routineActivitiesRouter.delete(
   "/:routineActivityId",
   async (req, res, next) => {
     try {
+      const { routineActivityId } = req.params;
       const routineActivity = await destroyRoutineActivity(routineActivityId);
       res.send({
         status: 200,

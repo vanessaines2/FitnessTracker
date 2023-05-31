@@ -13,7 +13,6 @@ router.get("/health", (req, res, next) => {
 router.use("/users", require("./users"));
 router.use("/auth", require("./auth"));
 router.use("/activities", require("./activities"));
-// router.use("index", require("./index"));
 router.use("/routineActivities", require("./routine_activities"));
 router.use("/routines", require("./routines"));
 
