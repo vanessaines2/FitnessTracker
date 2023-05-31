@@ -205,7 +205,7 @@ async function getRoutinesWithoutActivities() {
 }
 
 async function getPublicRoutinesByActivity(activityId) {
-  const { rows } = client.query(
+  const { rows } = await client.query(
     `
     SELECT 
       routines.id as id,
