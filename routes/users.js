@@ -18,7 +18,8 @@ usersRouter.post("/register", async (req, res, next) => {
       });
     }
     // POST /users/login
-    const user = await createUser({ username, password });
+
+    const user = await createUser(username, password);
     const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "2w" });
     res.send({
       message: "The username already exists",

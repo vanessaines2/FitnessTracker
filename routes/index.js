@@ -11,10 +11,10 @@ router.get("/health", (req, res, next) => {
 
 // Hook up other Routers ex: router.use('/users', require('./users'))
 router.use("/users", require("./users"));
-router.use("/auth", require("./auth.js"));
-// router.use("/activities", require("./activities"));
+router.use("/auth", require("./auth"));
+router.use("/activities", require("./activities"));
 // router.use("index", require("./index"));
-// router.use("/routineActivites", require("./routine_activities"));
+router.use("/routineActivities", require("./routine_activities"));
 router.use("/routines", require("./routines"));
 
 module.exports = router;
