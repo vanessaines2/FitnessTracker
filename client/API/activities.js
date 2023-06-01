@@ -8,3 +8,21 @@ export async function fetchAllActivities() {
     console.log(error);
   }
 }
+
+export async function createActivity(name, description) {
+  try {
+    const response = await fetch("/api/activities/", {
+      method: "POST",
+      body: JSON.stringify({
+        post: {
+          name,
+          description,
+        },
+      }),
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+}
