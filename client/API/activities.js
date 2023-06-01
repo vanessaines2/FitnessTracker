@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import { getAllActivities } from "../../db/adapters/activities";
 
 export function AllActivities() {
   const [activities, setActivities] = useState("");
   const [error, setError] = useState(null);
-
   useEffect(() => {
     async function getAllActivities() {
       try {
+        console.log("trying to fetch data");
         const response = await fetch("/api/activities/");
         const result = await response.json();
+        console.log("result:", result);
         setActivities(result);
       } catch (error) {
         setError(error);
@@ -17,10 +17,9 @@ export function AllActivities() {
     }
     getAllActivities();
   }, []);
-
   return (
     <div>
-      <p> helloooooo {getAllActivities} </p>
+      <p> helloooooo {activities} </p>
     </div>
   );
 }
