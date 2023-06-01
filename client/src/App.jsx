@@ -1,11 +1,14 @@
 import { useState } from "react";
-
+import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
+import { AllActivities } from "../Components/AllActivities";
 
 function App() {
   return (
     <>
-      <h1>Hello world</h1>
+      <Routes>
+        <Route path="/activities" element={<AllActivities />} />
+      </Routes>
     </>
   );
 }

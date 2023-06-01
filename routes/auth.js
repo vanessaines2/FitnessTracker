@@ -4,6 +4,7 @@ const SALT_ROUNDS = 10;
 
 const { createUser } = require("../db/adapters/users");
 
+// POST /api/auth/signup
 authRouter.post("/signup", async (req, res, next) => {
   try {
     const { username, password } = req.body;
