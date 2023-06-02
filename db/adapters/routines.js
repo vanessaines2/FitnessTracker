@@ -196,7 +196,7 @@ async function getAllRoutinesByUser(username) {
 async function getRoutinesWithoutActivities() {
   const {
     rows: [routine],
-  } = client.query(
+  } = await client.query(
     `SELECT * 
     FROM routines ;
     `
