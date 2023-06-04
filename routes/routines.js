@@ -1,5 +1,6 @@
 const express = require("express");
-const router = require("express").Router();
+const { authRequired } = reqire("./utils");
+const routinesRouter = require("express").Router();
 const {
   getRoutineById,
   getRoutinesWithoutActivities,
@@ -14,7 +15,7 @@ const {
 } = require("../db/adapters/routines");
 
 // localhost:3001/api/routines/routines
-router.get("/routines", async (req, res, next) => {
+routinesRouter.get("/routines", async (req, res, next) => {
   try {
     const publicRoutines = await getAllPublicRoutines();
     res.send({
@@ -28,7 +29,7 @@ router.get("/routines", async (req, res, next) => {
 });
 
 //localhost:3001/api/routines/
-router.post("/", async (req, res, next) => {
+routinesRouter.post("/", authRequired, async (req, res, next) => {
   try {
     const { creatorId, isPublic, name, goal } = req.body;
     const newRoutine = await createRoutine(creatorId, isPublic, name, goal);
@@ -42,7 +43,26 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.delete("/:routineId", async (req, res, next) => {
+router.patch("/:routineId", authRequired, async (req, res, next) => {
+  try {
+    const { routineId } = req.params;
+    const { isPublic, name, goal } = req.body;
+    const updatedRoutine = await updateRoutine(routineId, isPublic, name, goal);
+
+    if (!updatedRoutine) {
+      next({
+        name: "RoutineNotFound",
+        message: "A routine with that id does not exist",
+      });
+      return;
+    }
+    res.send({ message: "Routine Update", data: updatedRoutine });
+  } catch (error) {
+    next(error);
+  }
+});
+
+routinesRouter.delete("/:routineId", async (req, res, next) => {
   try {
     const { routineId } = req.params;
     const routine = await destroyRoutine(routineId);
@@ -57,4 +77,4 @@ router.delete("/:routineId", async (req, res, next) => {
   }
 });
 
-module.exports = router;
+module.exports = routinesRouter;
