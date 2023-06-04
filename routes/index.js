@@ -5,7 +5,10 @@ router.get("/health", (req, res, next) => {
   try {
     res.send("API is Healthy 😎!");
   } catch (error) {
-    next(error);
+    next({
+      name: "Error with Server",
+      message: "Site not working",
+    });
   }
 });
 

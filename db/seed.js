@@ -82,7 +82,7 @@ async function populateTables() {
     const userIDs = [];
 
     for (const user of users) {
-      console.log("user: " + user.username + " password: " + user.password);
+      console.log("User: ", user.username + " Password: ", user.password);
       const createdUser = await createUser(user.username, user.password);
 
       userIDs.push(createdUser.id);
