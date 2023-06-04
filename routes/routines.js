@@ -1,5 +1,5 @@
 const express = require("express");
-const { authRequired } = reqire("./utils");
+const { authRequired } = require("./utils");
 const routinesRouter = require("express").Router();
 const {
   getRoutineById,
@@ -43,7 +43,7 @@ routinesRouter.post("/", authRequired, async (req, res, next) => {
   }
 });
 
-router.patch("/:routineId", authRequired, async (req, res, next) => {
+routinesRouter.patch("/:routineId", authRequired, async (req, res, next) => {
   try {
     const { routineId } = req.params;
     const { isPublic, name, goal } = req.body;

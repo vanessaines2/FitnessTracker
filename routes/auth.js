@@ -40,29 +40,28 @@ authRouter.post("/register", async (req, res, next) => {
   }
 });
 
-
-authRouter.post("/login", async (req, res, next)) => {
+authRouter.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
   try {
-      const user = await getUserByUsername(username);
-      const checkedpassword = await bcrypt.compare(password, user.password);
-      if (checkedpassword) {
-        delete user.password;
-        const token = jwt.sign(user, process.env.JWT_SECRET);
+    const user = await getUserByUsername(username);
+    const checkedpassword = await bcrypt.compare(password, user.password);
+    if (checkedpassword) {
+      const token = jwt.sign(user, process.env.JWT_SECRET);
 
-        res.cookie("token", token, {
-          sameSite: "strict",
-          httpOnly: true,
-          signed: true,
+      res.cookie("token", token, {
+        sameSite: "strict",
+        httpOnly: true,
+        signed: true,
+      });
+      res.send({ message: "You're logged in!!" });
+    }
+  } catch (error) {
+    next({
+      name: "Invalid login",
+      message: "Wrong username or password provided",
+    });
+  }
 });
-      res.send({ message: "You're logged in!!"});
-      } catch (error){
-        next({ name: "Invalid login", message: "Wrong username or password provided"});
-
-      }
-      }};
-
-
 
 authRouter.get("/logout", async (req, res, next) => {
   try {
@@ -80,8 +79,8 @@ authRouter.get("/logout", async (req, res, next) => {
   }
 });
 
-
-authRouter.get ("/me", authRequired, (req, res, next)=> {res.send(req.user);
+authRouter.get("/me", authRequired, (req, res, next) => {
+  res.send(req.user);
 });
 
 module.exports = authRouter;

@@ -4,9 +4,9 @@
   "description": "- First make sure you create your database locally!   - `createdb fitness-dev`",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "seed": "node ./db/seed.js",
+    "server:dev": "nodemon server.js",
     "start:dev": "(npm run dev --prefix client) & nodemon server.js",
-    "seed": "node db/seed.js",
     "build": "npm install --prefix client && npm run build --prefix client "
   },
   "author": "",
@@ -20,17 +20,6 @@
     "jsonwebtoken": "^9.0.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
-    "pg": "^8.11.0",
-    "react-router-dom": "^6.11.2",
-    "vite": "^4.3.9"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pawanbenjamin/fitness-trackr-starter.git"
-  },
-  "keywords": [],
-  "bugs": {
-    "url": "https://github.com/pawanbenjamin/fitness-trackr-starter/issues"
-  },
-  "homepage": "https://github.com/pawanbenjamin/fitness-trackr-starter#readme"
+    "pg": "^8.11.0"
+  }
 }

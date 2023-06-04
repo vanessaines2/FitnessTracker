@@ -1,7 +1,7 @@
 const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
-const { authRequired } = requiire("./utils");
+const { authRequired } = require("./utils");
 const {
   createUser,
   getUserByUsername,
