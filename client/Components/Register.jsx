@@ -1,8 +1,12 @@
 export function RegisterForm() {
   return (
     <div className="register-page">
-      <h1> Do not have an account? Sign up! or Login </h1>
       <form className="register-form">
+        {" "}
+        <label>
+          {" "}
+          Do not have an account? --if its sign up path = register else /login--
+        </label>
         <label className="label" htmlFor="username">
           {" "}
           username:{" "}
