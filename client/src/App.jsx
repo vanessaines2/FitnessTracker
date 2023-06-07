@@ -18,7 +18,9 @@ function App() {
       <Routes>
         <Route path="/activities" element={<AllActivities />} />
         <Route path="/routines" element={<AllRoutines />} />
-        <Route path="/" element={<RegisterForm />} />
+        <Route path="/register" element={<RegisterForm />} />
+        <Route path="/login" element={<RegisterForm />}></Route>
+        <Route path="/" element={<RegisterForm />}></Route>
       </Routes>
     </div>
   );
