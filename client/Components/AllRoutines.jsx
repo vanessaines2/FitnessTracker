@@ -21,6 +21,8 @@ export function AllRoutines() {
             <div className="routines" key={routine.id}>
               <h3>Routine Name :{routine.name}</h3>
               <h4>Routine Goal: {routine.goal} </h4>
+              <h5>Routine Activities: </h5>
+              <h5></h5>
             </div>
           );
         })}

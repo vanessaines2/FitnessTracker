@@ -21,7 +21,7 @@ export function RegisterForm() {
         </label>
         <input
           required
-          minLength={5}
+          minLength={8}
           type="password"
           id="password"
           name="password"
