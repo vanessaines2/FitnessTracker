@@ -1,11 +1,25 @@
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+
 export function RegisterForm() {
+  const { pathname } = useLocation();
   return (
     <div className="register-page">
       <form className="register-form">
         {" "}
         <label>
           {" "}
-          Do not have an account? --if its sign up path = register else /login--
+          {pathname === "/register" ? (
+            <h2>
+              Do not have an account? Register or
+              <Link to="/login"> Login</Link>
+            </h2>
+          ) : (
+            <h2>
+              <Link to="/register">Register</Link>
+              Or Login
+            </h2>
+          )}
         </label>
         <label className="label" htmlFor="username">
           {" "}
