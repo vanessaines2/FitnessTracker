@@ -1,6 +1,7 @@
-const express = require("express");
-const usersRouter = express.Router();
+const usersRouter = require("express").Router();
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const SALT_ROUNDS = 10;
 const { authRequired } = require("./utils");
 const {
   createUser,
@@ -9,23 +10,34 @@ const {
 } = require("../db/adapters/users");
 
 // POST /users/register
-usersRouter.post("/register", async (req, res, next) => {
-  const { username, password } = req.body;
+usersRouter.post("/login", async (req, res, next) => {
   try {
+    const { username, password } = req.body;
     const _user = await getUserByUsername(username);
-    if (_user) {
+    if (username.length === 0) {
       next({
-        name: "Already A User",
-        message: "Registration successful",
+        message: "You must enter a username!",
+        name: "Username Error",
       });
+      return;
     }
-
-    // POST /users/login
-    const user = await createUser(username, password);
-    const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "2w" });
-    res.send({
-      message: "The username already exists",
-    });
+    if (_user.username !== username) {
+      next({
+        message: "Incorrect Username!",
+        name: "Username Error",
+      });
+      return;
+    }
+    const match = await bcrypt.compare(password, _user.password);
+    const token = jwt.sign(_user, process.env.JWT_SECRET);
+    if (match === true) {
+      res.cookie("token", token, {
+        sameSite: "strict",
+        httpOnly: true,
+        signed: true,
+      });
+      res.send(_user);
+    }
   } catch (error) {
     next(error);
   }

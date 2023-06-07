@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const SALT_ROUNDS = 10;
 const { authRequired } = require("./utils");
 const { createUser, getUserByUsername } = require("../db/adapters/users");
-// const { JWT_SECRET } = process.env;
+const { JWT_SECRET } = process.env;
 
 // POST /api/auth/signup
 authRouter.post("/register", async (req, res, next) => {
