@@ -26,9 +26,9 @@ server.get("/test", authRequired, (req, res, next) => {
   res.send("You are authorized!");
 });
 
-server.use((req, res, next) => {
-  res.sendFile(path.join(__dirname, "./client/dist", "index.html"));
-});
+// server.use((req, res, next) => {
+//   res.sendFile(path.join(__dirname, "./client/dist", "index.html"));
+// });
 
 // Error Handler
 server.use((err, req, res, next) => {

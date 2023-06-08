@@ -1,11 +1,26 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { registerUser } from "../API/registerUser";
 
 export function RegisterForm() {
   const { pathname } = useLocation();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      const result = await registerUser(username, password);
+      console.log("Result in Component: ", result);
+    } catch (error) {
+      setError(error);
+    }
+  }
+
   return (
     <div className="register-page">
-      <form className="register-form">
+      <form className="register-form" onSubmit={handleSubmit}>
         {" "}
         <label>
           {" "}
@@ -26,6 +41,7 @@ export function RegisterForm() {
           username:{" "}
         </label>
         <input
+          value={username}
           required
           minLength={5}
           type="text"
@@ -33,6 +49,9 @@ export function RegisterForm() {
           name="username"
           className="input"
           placeholder="Enter your username"
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
         />
         <label className="label" htmlFor="password">
           password:
@@ -40,12 +59,17 @@ export function RegisterForm() {
         <input
           required
           minLength={8}
+          value={password}
           type="password"
           id="password"
           name="password"
           className="input"
           placeholder="Enter your password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
         />
+        <button className="button">Submit</button>
       </form>
     </div>
   );

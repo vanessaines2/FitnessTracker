@@ -17,12 +17,15 @@ export function AllRoutines() {
       <h1>All Public Routines:</h1>
       {routines.length > 0 &&
         routines.map((routine) => {
+          console.log("Routine Activities: ", routine.activities);
           return (
             <div className="routines" key={routine.id}>
               <h3>Routine Name :{routine.name}</h3>
               <h4>Routine Goal: {routine.goal} </h4>
               <h5>Routine Activities: </h5>
-              <h5></h5>
+              {routine.activities.map((ra) => {
+                return <h5 key={ra.id}> {ra.name} </h5>;
+              })}
             </div>
           );
         })}
