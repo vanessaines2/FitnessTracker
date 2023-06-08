@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { registerUser } from "../API/registerUser";
+import { loginUser } from "../API/registerUser";
 
 export function RegisterForm() {
   const { pathname } = useLocation();
@@ -8,7 +9,7 @@ export function RegisterForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  async function handleSubmit(e) {
+  async function handleRegister(e) {
     e.preventDefault();
     try {
       const result = await registerUser(username, password);
@@ -18,9 +19,19 @@ export function RegisterForm() {
     }
   }
 
+  async function handleLogin(e) {
+    e.preventDefault();
+    try {
+      const result = await loginUser(username, password);
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="register-page">
-      <form className="register-form" onSubmit={handleSubmit}>
+      <form className="register-form" onSubmit={handleRegister}>
         {" "}
         <label>
           {" "}

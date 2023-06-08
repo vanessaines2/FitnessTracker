@@ -56,15 +56,19 @@ export async function fetchMe() {
 }
 
 export async function logOut() {
-  const response = await fetch("/api/auth/logout");
-  const { success, message } = await response.json();
-  if (!success) {
-    throw {
+  try {
+    const response = await fetch("/api/auth/logout");
+    const { success, message } = await response.json();
+    if (!success) {
+      throw {
+        message,
+      };
+    }
+    return {
+      success,
       message,
     };
+  } catch (error) {
+    console.log(error);
   }
-  return {
-    success,
-    message,
-  };
 }
