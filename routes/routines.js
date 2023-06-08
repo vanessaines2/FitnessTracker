@@ -2,13 +2,8 @@ const express = require("express");
 const { authRequired } = require("./utils");
 const routinesRouter = require("express").Router();
 const {
-  getRoutineById,
-  getRoutinesWithoutActivities,
-  getAllRoutines,
   getAllPublicRoutines,
-  getAllRoutinesByUser,
-  getPublicRoutinesByUser,
-  getPublicRoutinesByActivity,
+  getRoutineById,
   createRoutine,
   updateRoutine,
   destroyRoutine,
@@ -23,6 +18,16 @@ routinesRouter.get("/routines", async (req, res, next) => {
       status_message: "got all public routines",
       data: publicRoutines,
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+routinesRouter.get("/:routineId", async (req, res, next) => {
+  try {
+    const routine = await getRoutineById(req.params.id);
+    console.log("Routine in GET", routine);
+    res.send(routine);
   } catch (error) {
     next(error);
   }
@@ -66,10 +71,15 @@ routinesRouter.delete("/:routineId", async (req, res, next) => {
   try {
     const { routineId } = req.params;
     const routine = await destroyRoutine(routineId);
-    if (!routine) throw error;
+    if (!routine) {
+      next({
+        name: "RoutineNotFound",
+        message: "A routine with that id does not exist",
+      });
+      return;
+    }
     res.send({
-      status: 200,
-      status_message: "deleted routine",
+      message: "deleted routine",
       data: null,
     });
   } catch (error) {

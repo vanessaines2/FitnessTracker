@@ -26,7 +26,7 @@ async function getRoutineActivityById(routineActivityId) {
     } = await client.query(
       `SELECT * 
             FROM routine_activities
-            WHERE id=$1;
+            WHERE routine_id=$1;
             `,
       [routineActivityId]
     );
