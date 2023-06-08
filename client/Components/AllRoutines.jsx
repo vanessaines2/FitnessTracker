@@ -22,9 +22,17 @@ export function AllRoutines() {
             <div className="routines" key={routine.id}>
               <h3>Routine Name :{routine.name}</h3>
               <h4>Routine Goal: {routine.goal} </h4>
-              <h5>Routine Activities: </h5>
+
               {routine.activities.map((ra) => {
-                return <h5 key={ra.id}> {ra.name} </h5>;
+                return (
+                  <ul key={ra.id} style={{ listStyle: "none" }}>
+                    {" "}
+                    Activity <li>name : {ra.name} , </li>
+                    <li>description: {ra.description} ,</li>
+                    <li>duration: {ra.duration} ,</li>
+                    <li>count: {ra.count}</li>
+                  </ul>
+                );
               })}
             </div>
           );
