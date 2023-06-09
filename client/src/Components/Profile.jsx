@@ -3,7 +3,7 @@ import { logOut } from "../API/registerUser";
 import { useNavigate } from "react-router-dom";
 
 export function Profile() {
-  const { user, loggedIn } = useAuth();
+  const { user, setLoggedIn } = useAuth();
   console.log("user: ", user);
   const navigate = useNavigate();
 
@@ -15,6 +15,7 @@ export function Profile() {
           onClick={async (e) => {
             e.preventDefault();
             await logOut();
+            setLoggedIn(false);
             navigate("/");
           }}
         >
