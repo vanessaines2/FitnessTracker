@@ -36,15 +36,15 @@ export function RegisterForm() {
         {" "}
         <label>
           {" "}
-          {pathname === "/register" ? (
+          {pathname === "/login" ? (
             <h2>
-              Do not have an account? Register or
-              <Link to="/login"> Login</Link>
+              Login or
+              <Link to="/register"> Register</Link>
             </h2>
           ) : (
             <h2>
-              <Link to="/register">Register</Link>
-              Or Login
+              Register Below or
+              <Link to="/login">Login</Link>
             </h2>
           )}
         </label>
