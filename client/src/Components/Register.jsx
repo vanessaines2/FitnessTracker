@@ -1,40 +1,38 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { registerUser } from "../API/registerUser";
 import { loginUser } from "../API/registerUser";
+import useAuth from "../hooks/auth";
 
 export function RegisterForm() {
   const { pathname } = useLocation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { setLoggedIn } = useAuth();
+  const navigate = useNavigate();
 
-  async function handleRegister(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const result = await registerUser(username, password);
-      console.log("Result in Component: ", result);
+      let result;
+      if (pathname === "/login") {
+        result = await loginUser(username, password);
+      } else {
+        result = await registerUser(username, password);
+      }
+      if (result.success) {
+        setLoggedIn(true);
+        navigate("/me");
+      }
     } catch (error) {
       setError(error);
     }
   }
 
-  // maybe an if statement
-  // if pathname === "/register" then handle register else handle login /login
-
-  async function handleLogin(e) {
-    e.preventDefault();
-    try {
-      const result = await loginUser(username, password);
-      return result;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   return (
     <div className="register-page">
-      <form className="register-form" onSubmit={handleRegister}>
+      <form className="register-form" onSubmit={handleSubmit}>
         {" "}
         <label>
           {" "}
