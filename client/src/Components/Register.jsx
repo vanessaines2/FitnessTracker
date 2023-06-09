@@ -19,6 +19,9 @@ export function RegisterForm() {
     }
   }
 
+  // maybe an if statement
+  // if pathname === "/register" then handle register else handle login /login
+
   async function handleLogin(e) {
     e.preventDefault();
     try {
