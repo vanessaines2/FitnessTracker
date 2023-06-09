@@ -4,6 +4,7 @@ import "./App.css";
 import { AllActivities } from "../Components/AllActivities";
 import { AllRoutines } from "../Components/AllRoutines";
 import { RegisterForm } from "../Components/Register";
+import { Profile } from "../Components/Profile";
 function App() {
   return (
     <div className="app">
@@ -21,6 +22,7 @@ function App() {
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<RegisterForm />}></Route>
         <Route path="/" element={<RegisterForm />}></Route>
+        <Route path="/me" element={<Profile />}></Route>
       </Routes>
     </div>
   );

@@ -29,8 +29,8 @@ export function AllRoutines() {
                     {" "}
                     Activity <li>name : {ra.name} , </li>
                     <li>description: {ra.description} ,</li>
-                    <li>duration: {ra.duration} ,</li>
-                    <li>count: {ra.count}</li>
+                    <li>duration: {ra.duration} minutes ,</li>
+                    <li>count: {ra.count} </li>
                   </ul>
                 );
               })}
