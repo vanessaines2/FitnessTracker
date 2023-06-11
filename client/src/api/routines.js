@@ -8,15 +8,14 @@ export async function fetchAllRoutines() {
     console.log(error);
   }
 }
-export async function createRoutine(name, goal, creatorId, isPublic) {
+export async function createRoutine(is_public, name, goal) {
   try {
-    const resp = await fetch(`/api/routines`, {
+    const resp = await fetch("/api/routines/", {
       method: "POST",
       body: JSON.stringify({
+        is_public,
         name,
         goal,
-        creatorId,
-        isPublic,
       }),
       headers: {
         "Content-Type": "application/json",

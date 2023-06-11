@@ -5,6 +5,9 @@ import { AllActivities } from "./components/auth/AllActivities";
 import { AllRoutines } from "./components/auth/AllRoutines";
 import { RegisterForm } from "./components/auth/Register";
 import { Profile } from "./components/auth/Profile";
+import CreateRoutine from "./components/auth/nav/CreateRoutineForm";
+import { CreateActivity } from "./components/auth/nav/CreateActivity";
+
 function App() {
   return (
     <div className="app">
@@ -23,6 +26,8 @@ function App() {
         <Route path="/login" element={<RegisterForm />}></Route>
         <Route path="/" element={<RegisterForm />}></Route>
         <Route path="/me" element={<Profile />}></Route>
+        <Route path="/createroutine" element={<CreateRoutine />}></Route>
+        <Route path="/createActivity" element={<CreateActivity />}></Route>
       </Routes>
     </div>
   );

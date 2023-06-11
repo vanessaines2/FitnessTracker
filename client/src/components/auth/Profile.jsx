@@ -3,12 +3,14 @@ import { logOut } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getUserRoutines } from "../../api/user";
+import { createRoutine } from "../../api/routines";
 
 export function Profile() {
   const { user, setLoggedIn } = useAuth();
   console.log("user: ", user);
   const navigate = useNavigate();
   const [myRoutines, setMyRoutines] = useState("");
+  const [createdRoutines, setMyCreatedRoutines] = useState("");
 
   useEffect(() => {
     async function getMyRoutines() {
@@ -22,6 +24,7 @@ export function Profile() {
   return (
     <div className="profile-page">
       <h1>Welcome Home {user.username}!</h1>
+
       <footer>
         <button
           onClick={async (e) => {

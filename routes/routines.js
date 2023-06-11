@@ -37,7 +37,7 @@ routinesRouter.get("/:routineId", async (req, res, next) => {
 routinesRouter.post("/", authRequired, async (req, res, next) => {
   try {
     const { creatorId, isPublic, name, goal } = req.body;
-    const newRoutine = await createRoutine(creatorId, isPublic, name, goal);
+    const newRoutine = await createRoutine(name, goal, creatorId, isPublic);
     res.send({
       status: 200,
       status_message: "created routine",
