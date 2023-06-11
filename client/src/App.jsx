@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
-import { AllActivities } from "./components/AllActivities";
-import { AllRoutines } from "./components/AllRoutines";
-import { RegisterForm } from "./components/Register";
-import { Profile } from "./components/Profile";
+import { AllActivities } from "./components/auth/AllActivities";
+import { AllRoutines } from "./components/auth/AllRoutines";
+import { RegisterForm } from "./components/auth/Register";
+import { Profile } from "./components/auth/Profile";
 function App() {
   return (
     <div className="app">

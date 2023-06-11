@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchAllRoutines } from "../api/routines";
+import { fetchAllRoutines } from "../../../api/routines";
 
 export function AllRoutines() {
   const [routines, setRoutines] = useState([]);

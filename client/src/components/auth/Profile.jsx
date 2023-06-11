@@ -1,5 +1,5 @@
-import useAuth from "../hooks/auth";
-import { logOut } from "../api/registerUser";
+import useAuth from "../../../hooks/auth";
+import { logOut } from "../../../api/registerUser";
 import { useNavigate } from "react-router-dom";
 
 export function Profile() {
