@@ -1,9 +1,15 @@
 import { useState, useEffect } from "react";
 import { fetchAllActivities } from "../../api/activities";
+import useAuth from "../../hooks/auth";
+import { CreateActivity } from "./nav/CreateActivity";
 
 export function AllActivities() {
   const [activities, setActivities] = useState("");
+  const { user, setLoggedIn } = useAuth();
   // const [error, setError] = useState(null);
+  if (setLoggedIn === true) {
+    return <CreateActivity />;
+  }
 
   useEffect(() => {
     async function getActivities() {
