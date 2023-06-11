@@ -14,11 +14,12 @@ export async function createActivity(name, description) {
     const response = await fetch("/api/activities/", {
       method: "POST",
       body: JSON.stringify({
-        post: {
-          name,
-          description,
-        },
+        name,
+        description,
       }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     const result = await response.json();
     return result;
