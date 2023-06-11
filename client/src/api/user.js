@@ -7,6 +7,7 @@ export async function getUserRoutines(username) {
       },
     });
     const result = await resp.json();
+    console.log("result from get user api:", result);
     return result;
   } catch (err) {
     console.error(err);

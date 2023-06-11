@@ -7,9 +7,6 @@ export function AllActivities() {
   const [activities, setActivities] = useState("");
   const { user, setLoggedIn } = useAuth();
   // const [error, setError] = useState(null);
-  if (setLoggedIn === true) {
-    return <CreateActivity />;
-  }
 
   useEffect(() => {
     async function getActivities() {
@@ -22,6 +19,7 @@ export function AllActivities() {
   return (
     <div className="activitiesPage">
       <h1>All Activities</h1>
+      {setLoggedIn === true && <CreateActivity />}
       {activities.length > 0 &&
         activities.map((activity) => {
           return (

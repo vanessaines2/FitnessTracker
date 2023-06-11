@@ -22,6 +22,7 @@ export async function createRoutine(is_public, name, goal) {
       },
     });
     const result = await resp.json();
+    console.log("result from api helper:", result);
     return result;
   } catch (err) {
     console.error(err);

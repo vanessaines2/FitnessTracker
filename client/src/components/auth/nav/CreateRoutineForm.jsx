@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { createRoutine } from "../../../api/routines";
 
 export default function CreateRoutine() {
@@ -10,8 +10,8 @@ export default function CreateRoutine() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const result = createRoutine(is_public, name, goal);
-      console.log(result);
+      const result = await createRoutine(is_public, name, goal);
+      console.log("result in create routine", result);
       setMyCreatedRoutines(result);
     } catch (error) {
       console.log(error);

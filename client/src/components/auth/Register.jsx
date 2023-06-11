@@ -70,7 +70,7 @@ export function RegisterForm() {
         </label>
         <input
           required
-          minLength={8}
+          minLength={7}
           value={password}
           type="password"
           id="password"

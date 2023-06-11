@@ -3,23 +3,22 @@ import { logOut } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getUserRoutines } from "../../api/user";
-import { createRoutine } from "../../api/routines";
 
 export function Profile() {
-  const { user, setLoggedIn } = useAuth();
+  const { user, setUser, setLoggedIn } = useAuth();
   console.log("user: ", user);
   const navigate = useNavigate();
   const [myRoutines, setMyRoutines] = useState("");
-  const [createdRoutines, setMyCreatedRoutines] = useState("");
+  // const [createdRoutines, setMyCreatedRoutines] = useState("");
 
-  useEffect(() => {
-    async function getMyRoutines() {
-      const response = await getUserRoutines();
-      console.log("response: ", response);
-      setMyRoutines(response);
-    }
-    getMyRoutines();
-  }, []);
+  // useEffect(() => {
+  //   async function getMyRoutines() {
+  //     const response = await getUserRoutines(user);
+  //     console.log("response from profile: ", response);
+  //     setMyRoutines(response);
+  //   }
+  //   getMyRoutines();
+  // }, []);
 
   return (
     <div className="profile-page">
