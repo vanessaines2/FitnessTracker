@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchAllActivities } from "../../../api/activities";
+import { fetchAllActivities } from "../../api/activities";
 
 export function AllActivities() {
   const [activities, setActivities] = useState("");
