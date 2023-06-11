@@ -1,9 +1,9 @@
 // Create dummy data to seed into your DB
 const users = [
-  { username: "Wanda", password: "1234567" },
-  { username: "Jessica", password: "1234567" },
-  { username: "Vanessa", password: "1234567" },
-  { username: "Malachi", password: "12345" },
+  { username: "Wanda", password: "12345678" },
+  { username: "Jessica", password: "12345678" },
+  { username: "Vanessa", password: "12345678" },
+  { username: "Malachi", password: "12345678" },
 ];
 
 const activities = [
