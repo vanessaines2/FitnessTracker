@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { registerUser } from "../../api/registerUser";
-import { loginUser } from "../../api/registerUser";
+import { registerUser } from "../../api/auth";
+import { loginUser } from "../../api/auth";
 import useAuth from "../../hooks/auth";
 
 export function RegisterForm() {

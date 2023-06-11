@@ -5,7 +5,7 @@ export async function createRoutineActivity(
   duration
 ) {
   try {
-    const resp = await fetch(`/api/routineActivities`, {
+    const resp = await fetch("/api/routineActivities", {
       method: "POST",
       body: JSON.stringify({
         routineId,

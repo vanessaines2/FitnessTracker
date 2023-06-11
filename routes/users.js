@@ -2,6 +2,7 @@ const usersRouter = require("express").Router();
 
 const { getUserByUsername } = require("../db/adapters/users");
 
+// /api/users/:username/routines
 usersRouter.get("/:username/routines", async (req, res, next) => {
   try {
     const { username } = req.params;
