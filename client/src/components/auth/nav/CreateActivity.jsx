@@ -21,16 +21,16 @@ export function CreateActivity() {
   }
 
   return (
-    <div className="routine-form">
+    <div className="activity-form">
       <h3>Create a new activity</h3>
       <input
         type="text"
-        placeholder="name"
+        placeholder="Activity name"
         onChange={(e) => setName(e.target.value)}
       />
       <input
         type="text"
-        placeholder="description"
+        placeholder="Activity description"
         onChange={(e) => setDescription(e.target.value)}
       />
       <button onClick={handleClick}>Create</button>

@@ -19,7 +19,7 @@ export function AllActivities() {
   return (
     <div className="activitiesPage">
       <h1>All Activities</h1>
-      {setLoggedIn === true && <CreateActivity />}
+
       {activities.length > 0 &&
         activities.map((activity) => {
           return (

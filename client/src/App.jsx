@@ -15,9 +15,9 @@ function App() {
       <header className="header">
         <h1>VanWan Fitness! </h1>
         <p>Come get Fit</p>
-
+        {/* 
         <Link to="/activities">Activities</Link>
-        <Link to="/routines"> Routines </Link>
+        <Link to="/routines"> Routines </Link> */}
 
         {/* have an authorized view vs unauthorized */}
       </header>

@@ -68,3 +68,10 @@ p {
   text-align: center;
   font-size: 30px;
 }
+.activity-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 240px;
+  background-color: #6d85af;
+}
