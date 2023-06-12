@@ -1,0 +1,74 @@
+import { useState } from "react";
+import "./AuthForm.css";
+import { loginUser, registerUser } from "../../api/auth";
+import useAuth from "../../hooks/auth";
+import { useNavigate } from "react-router-dom";
+export default function AuthForm({ authRoute }) {
+  const [errorText, setErrorText] = useState("none");
+
+  const [showPassword, setShowPassword] = useState("password");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { setUser, setIsLoggedIn } = useAuth();
+
+  const navigate = useNavigate();
+
+  async function handleClick(e) {
+    e.preventDefault();
+    try {
+      if (authRoute === "login") {
+        const result = await loginUser(username, password);
+        handleResult(result);
+      } else if (authRoute === "register") {
+        const result = await registerUser(username, password);
+        handleResult(result);
+      }
+    } catch (err) {
+      setErrorText(err.message);
+    }
+  }
+
+  function handleResult(result) {
+    if (result.data) {
+      setErrorText(result.message);
+      setUser(result.data);
+      setIsLoggedIn(true);
+      setTimeout(() => {
+        navigate("/my-routines");
+      }, 2000);
+    } else {
+      console.log(result);
+      setErrorText(result.message || "An unkown error has occured.");
+    }
+  }
+
+  return (
+    <form action="" className="auth-form">
+      <input
+        type="text"
+        placeholder="Username"
+        required
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <input
+        type={showPassword}
+        placeholder="Password"
+        required
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <p
+        className="show-hide"
+        onClick={() => {
+          showPassword === "password"
+            ? setShowPassword("text")
+            : setShowPassword("password");
+        }}
+      >
+        {showPassword === "password" ? "Show Password" : "Hide Password"}
+      </p>
+      <button onClick={handleClick}>Submit</button>
+      {errorText !== "none" ? <p>{errorText}</p> : ""}
+    </form>
+  );
+}

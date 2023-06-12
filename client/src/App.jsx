@@ -7,6 +7,7 @@ import { RegisterForm } from "./components/auth/Register";
 import { Profile } from "./components/auth/Profile";
 import CreateRoutine from "./components/auth/nav/CreateRoutineForm";
 import { CreateActivity } from "./components/auth/nav/CreateActivity";
+import { MyRoutines } from "./components/auth/MyRoutines";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/me" element={<Profile />}></Route>
         <Route path="/createroutine" element={<CreateRoutine />}></Route>
         <Route path="/createActivity" element={<CreateActivity />}></Route>
+        <Route path="/myroutines" element={<MyRoutines />} />
       </Routes>
     </div>
   );

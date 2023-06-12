@@ -20,7 +20,8 @@ export default function CreateRoutine() {
 
   return (
     <div className="routineForm">
-      <h1>Create Routine</h1>
+      <h2>Create Your New Routine</h2>
+
       <form className="routineForm" onSubmit={handleSubmit}>
         <label>enter routine name</label>{" "}
         <input
@@ -53,7 +54,7 @@ export default function CreateRoutine() {
             setGoal(e.target.value);
           }}
         />
-        <button>Submit </button>
+        <button onClick={handleClick}>Submit</button>
       </form>
     </div>
   );

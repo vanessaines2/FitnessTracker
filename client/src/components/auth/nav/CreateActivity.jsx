@@ -5,11 +5,11 @@ export function CreateActivity() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [errorText, setErrorText] = useState("");
-  const [newActivity, setNewActivity] = useState("");
 
   async function handleClick() {
     try {
-      if (!name || !description) return setErrorText("Missing required fields");
+      if (!name || !description)
+        return setErrorText("Missing the required fields");
       const newActivity = await createActivity(name, description);
 
       setErrorText(newActivity.message);
