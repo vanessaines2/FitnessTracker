@@ -12,12 +12,14 @@ import { MyRoutines } from "./components/auth/MyRoutines";
 function App() {
   return (
     <div className="app">
-      <header className="header">
-        <h1>VanWan Fitness! </h1>
-        <p>Come get Fit</p>
-        {/* 
+      <h1 className="header"> Van Wan Fitness! </h1>
+      {/* <h1 className="header">Come get Fit</h1> */}
+      <header className="sidenav">
+        <Link to="/">Home</Link>
         <Link to="/activities">Activities</Link>
-        <Link to="/routines"> Routines </Link> */}
+        <Link to="/routines"> Routines </Link>
+
+        <Link to="/me">Profile </Link>
 
         {/* have an authorized view vs unauthorized */}
       </header>
