@@ -8,8 +8,10 @@ import { Profile } from "./components/auth/Profile";
 import CreateRoutine from "./components/auth/nav/CreateRoutineForm";
 import { CreateActivity } from "./components/auth/nav/CreateActivity";
 import { MyRoutines } from "./components/auth/MyRoutines";
+import useAuth from "./hooks/auth";
 
 function App() {
+  const { user, setUser, loggedIn, setLoggedIn } = useAuth();
   return (
     <div className="app">
       <h1 className="header"> Van Wan Fitness! </h1>
@@ -18,7 +20,7 @@ function App() {
         <Link to="/">Home</Link>
         <Link to="/activities">Activities</Link>
         <Link to="/routines"> Routines </Link>
-
+        {loggedIn && <Link to="createActivity"> Create Activity </Link>}
         <Link to="/me">Profile </Link>
 
         {/* have an authorized view vs unauthorized */}
