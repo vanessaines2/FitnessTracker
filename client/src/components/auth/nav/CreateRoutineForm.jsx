@@ -54,7 +54,7 @@ export default function CreateRoutine() {
             setGoal(e.target.value);
           }}
         />
-        <button onClick={handleClick}>Submit</button>
+        <button>Submit</button>
       </form>
     </div>
   );
