@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { createActivity } from "../../../api/activities";
+import { useNavigate } from "react-router-dom";
 
 export function CreateActivity() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [errorText, setErrorText] = useState("");
+  const [newActivity, setNewActivity] = useState("");
+  const navigate = useNavigate();
 
   async function handleClick() {
     try {
@@ -14,6 +17,7 @@ export function CreateActivity() {
 
       setErrorText(newActivity.message);
       setNewActivity(newActivity);
+      navigate("/activities");
     } catch (error) {
       setErrorText(error.message);
       console.error(error);
